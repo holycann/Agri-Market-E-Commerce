@@ -19,6 +19,8 @@ require_once __DIR__ . '/src/core/Router.php';
 require_once __DIR__ . '/src/routes/AdminRoute.php';
 require_once __DIR__ . '/src/routes/ApiRoute.php';
 require_once __DIR__ . '/src/routes/AuthRoute.php';
+require_once __DIR__ . '/src/routes/PagesRoute.php';
+require_once __DIR__ . '/src/routes/UserRoute.php';
 require_once __DIR__ . '/src/routes/VendorRoute.php';
 
 
