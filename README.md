@@ -56,8 +56,7 @@ AgriMarket/
 ### Prerequisites
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
-- Apache/Nginx web server
-- Composer for dependency management
+- Xampp
 
 ### Installation Steps
 1. Clone the repository:
@@ -65,60 +64,44 @@ AgriMarket/
    git clone https://github.com/holycann/Agri-Market-E-Commerce.git
    ```
 
-2. Install dependencies:
+2. Configure environment variables:
+   <!-- - Copy `config/env.example.php` to `config/env.php` -->
+   - Update database credentials and other settings on `config/env.php`
+
+3. Run database migrations:
    ```bash
-   composer install
+   php utils/migrate.php up
    ```
 
-3. Configure environment variables:
-   - Copy `config/env.example.php` to `config/env.php`
-   - Update database credentials and other settings
-
-4. Run database migrations:
-   ```bash
-   php utils/migrate.php
-   ```
-
-5. Set up virtual host:
-   - Configure your web server to point to the project's public directory
-   - Ensure mod_rewrite is enabled for Apache
-
-6. Access the application:
+4. Access the application:
    - Open your browser and navigate to the configured domain
-   - Default admin credentials: admin@agrimarket.com / admin123
+   <!-- - Default admin credentials: admin@agrimarket.com / admin123 -->
 
 ## Development
 
 ### Creating New Components
 Use the provided utility scripts to generate boilerplate code:
 ```bash
-php utils/create.php controller ControllerName
-php utils/create.php model ModelName
-php utils/create.php repository RepositoryName
+php utils/create.php controller directory ControllerName
+php utils/create.php model directory ModelName
+php utils/create.php repository directory RepositoryName
+php utils/create.php service directory ServiceName
+php utils/create.php view directory ViewName
 ```
 
 ### Database Migrations
 Create new migrations:
 ```bash
-php utils/create.php migration MigrationName
+php utils/create.php migration directory MigrationName
 ```
 
 Run migrations:
+Make Table Base Ur Migration
 ```bash
-php utils/migrate.php
+php utils/migrate.php up
 ```
 
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-For any inquiries or support, please contact:
-- Email: support@agrimarket.com
-- GitHub: [holycann](https://github.com/holycann)
+Drop Table Base Ur Migration
+```bash
+php utils/migrate.php down
+```
