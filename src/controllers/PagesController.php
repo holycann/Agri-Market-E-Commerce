@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../core/BaseController.php';
+require_once __DIR__ . '/../../core/BaseController.php';
 
 class PagesController extends BaseController
 {
@@ -12,19 +12,27 @@ class PagesController extends BaseController
     public function IndexPage()
     {
         // Menampilkan halaman utama
-        $this->render('user/Homepage');
+        $this->render('customer/Homepage');
     }
 
     public function LoginPage()
     {
+
         // Menampilkan halaman login
-        $this->render('user/Login');
+        $this->render('auth/Login');
+
     }
 
     public function RegisterPage()
     {
         // Menampilkan halaman register
-        $this->render('user/Register');
+        $this->render('auth/Register');
+    }
+
+    public function NotFoundPage()
+    {
+        // Menampilkan halaman 404
+        $this->render('error/404');
     }
 
 }

@@ -1,41 +1,40 @@
 <?php
 
+require_once __DIR__ . '/../../core/BaseService.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 
 class UserService extends BaseService
 {
-    public function __construct(UserRepository $repository)
+    public function __construct()
     {
-        parent::__construct($repository);
+        parent::__construct(new UserRepository());
     }
 
-    // Mendapatkan semua data
-    public function getAllData()
-    {
-        return $this->getAll();
-    }
 
-    // Mendapatkan data berdasarkan ID
-    public function getDataById(int $id)
+    public function createNewData(array $data): UserModel|array
     {
-        return $this->getById($id);
-    }
+        // Validate email format
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return ["error" => "Invalid email format"];
+        }
 
-    // Menambahkan data baru
-    public function createNewData(array $data)
-    {
-        return $this->createData($data);
-    }
+        // Check if email is already registered
+        $existingUser = $this->repository->findByEmail($data['email']);
+        if ($existingUser) {
+            return ["error" => "Email already registered"];
+        }
 
-    // Memperbarui data berdasarkan ID
-    public function updateExistingData(int $id, array $data)
-    {
-        return $this->updateData($id, $data);
-    }
+        // Hash the password for security
+        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
 
-    // Menghapus data berdasarkan ID
-    public function removeData(int $id)
-    {
-        return $this->deleteData($id);
+        unset($data['confirm_password']); // Ensure confirm_password is not stored
+        $data['role'] = 'customer';
+        $data['created_at'] = date("Y-m-d H:i:s");
+        $data['updated_at'] = null;
+
+        // Create the user in the database and return the created UserModel
+        $newUser = $this->repository->insertData($data)->toArray();
+
+        return $newUser ?: ["error" => "Failed to save user"];
     }
 }

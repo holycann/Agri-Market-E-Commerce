@@ -19,10 +19,13 @@ class Response
     {
         extract($data, EXTR_SKIP);
 
-        $viewFile = __DIR__ . "/../views/pages/{$view}.php";
+        $viewFile = __DIR__ . "/../src/views/{$view}.php";
 
+        // Debugging untuk memastikan view ditemukan
         if (!file_exists($viewFile)) {
-            self::handleNotFound();
+            echo "View file not found: " . $viewFile;
+            //self::handleNotFound();
+            return;
         }
 
         ob_start();
@@ -35,7 +38,7 @@ class Response
         $request = new Request();
 
         if ($request->isGet()) {
-            self::redirect('/404');
+            self::redirect(BASE_URL . '/404');
         } else {
             self::json(['error' => 'Not Found'], 404);
         }

@@ -8,16 +8,16 @@
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">Fresh Agricultural Products Directly from Farmers</h1>
                 <p class="text-xl text-gray-600 mb-6">Support local farmers and get the freshest produce at competitive prices.</p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="/products" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition duration-200">
+                    <a href="<?= BASE_ENDPOINT ?>/products" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition duration-200">
                         Shop Now
                     </a>
-                    <a href="/market-insights" class="inline-block bg-white text-green-600 border border-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-50 transition duration-200">
+                    <a href="<?= BASE_ENDPOINT ?>/market-insights" class="inline-block bg-white text-green-600 border border-green-600 px-6 py-3 rounded-lg font-medium hover:bg-green-50 transition duration-200">
                         Market Insights
                     </a>
                 </div>
             </div>
             <div class="hidden md:block">
-                <img src="/assets/images/hero-image.jpg" alt="Fresh farm produce" class="rounded-lg shadow-xl" 
+                <img src="<?= ASSETS_URL ?>/images/hero-image.jpg" alt="Fresh farm produce" class="rounded-lg shadow-xl" 
                      onerror="this.src='https://images.unsplash.com/photo-1487446815771-f819bdfa7ea9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'">
             </div>
         </div>

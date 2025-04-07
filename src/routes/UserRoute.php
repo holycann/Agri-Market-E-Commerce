@@ -1,10 +1,18 @@
 <?php
 
-require_once __DIR__ . '/../core/Router.php';
-require_once __DIR__ . '/../controllers/{{controllerName}}.php';
+require_once __DIR__ . '/../../core/Router.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 
-Router::get('/{{path}}', [{{controllerName}}::class, 'ClassMethod']);
-Router::get('/{{path}}/{id}', [{{controllerName}}::class, 'ClassMethod']);
-Router::post('/{{path}}', [{{controllerName}}::class, 'ClassMethod']);
-Router::put('/{{path}}/{id}', [{{controllerName}}::class, 'ClassMethod']);
-Router::delete('/{{path}}/{id}', [{{controllerName}}::class, 'ClassMethod']);
+Router::group([
+    'prefix' => 'user',
+    'middleware' => [
+        AuthMiddleware::class,
+        [RoleMiddleware::class, ['admin', 'vendor', 'customer', 'staff']]
+    ]
+], function () {
+    Router::get('/', [UserController::class, 'index']);
+    Router::get('/{id}', [UserController::class, 'show']);
+    Router::post('/', [UserController::class, 'store']);
+    Router::put('/{id}', [UserController::class, 'update']);
+    Router::delete('/{id}', [UserController::class, 'delete']);
+});

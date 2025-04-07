@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/BaseRepository.php';
-
+require_once __DIR__ . '/../../core/BaseRepository.php';
+require_once __DIR__ . '/../models/UserModel.php';
 class UserRepository extends BaseRepository
 {
     public function __construct()
@@ -9,33 +9,19 @@ class UserRepository extends BaseRepository
         parent::__construct('users');
     }
 
-    // Mendapatkan semua data
-    public function getAll()
+    public function findByEmail($email): UserModel | bool
     {
-        return $this->all();
+        $sql = "SELECT * FROM $this->table WHERE email = :email";
+        $user = $this->queryOne($sql, ["email" => $email]);
+        return $user ? new UserModel($user) : false;
     }
 
-    // Mendapatkan data berdasarkan ID
-    public function getById($id)
+    public function insertData($data): UserModel
     {
-        return $this->findById($id);
-    }
+        $userId = $this->insert($data);
 
-    // Menyimpan data baru
-    public function insertData($data)
-    {
-        return $this->insert($data);
-    }
+        $user = $this->findById($userId);
 
-    // Memperbarui data berdasarkan ID
-    public function updateData($id, $data)
-    {
-        return $this->update($id, $data);
-    }
-
-    // Menghapus data berdasarkan ID
-    public function deleteData($id)
-    {
-        return $this->delete($id);
+        return new UserModel($user);
     }
 }

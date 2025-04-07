@@ -14,6 +14,7 @@ $env = require_once __DIR__ . '/env.php';
 define('APP_NAME', $env['app_name']);       // Application name for display purposes
 define('BASE_ENDPOINT', $env['base_endpoint']); // Base path for routing
 define('ASSETS_URL', $env['base_url'] . $env['base_endpoint'] . '/assets'); // URL for static assets
+define('BASE_URL', $env['base_url'] . $env['base_endpoint']); // Base URL for the application
 
 // Configure session lifetime (1 hour)
 ini_set('session.gc_maxlifetime', 3600);

@@ -12,10 +12,12 @@
 // Configure error reporting and timezone
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/log/php-error.log');
 date_default_timezone_set('Asia/Bangkok');
+require_once __DIR__ . '/config/AppConfig.php';
 
 // Include all necessary route definitions
-require_once __DIR__ . '/src/core/Router.php';
+require_once __DIR__ . '/core/Router.php';
 require_once __DIR__ . '/src/routes/AdminRoute.php';
 require_once __DIR__ . '/src/routes/ApiRoute.php';
 require_once __DIR__ . '/src/routes/AuthRoute.php';

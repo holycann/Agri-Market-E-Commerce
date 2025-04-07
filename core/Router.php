@@ -1,10 +1,15 @@
 <?php
 
+require_once __DIR__ . '/../core/Request.php';
+require_once __DIR__ . '/../core/Response.php';
+
 class Router
 {
     private static $routes = [];
+    private static $groupPrefix = '';
+    private static $groupMiddleware = null;
 
-    // Menambahkan middleware sebagai parameter opsional
+
     public static function get(string $path, $handler, $middleware = null)
     {
         self::addRoute('GET', $path, $handler, $middleware);
@@ -25,67 +30,102 @@ class Router
         self::addRoute('DELETE', $path, $handler, $middleware);
     }
 
-    // Menambahkan middleware ke dalam rute
+    public static function group(array $options, callable $callback)
+    {
+        $previousPrefix = self::$groupPrefix;
+        $previousMiddleware = self::$groupMiddleware;
+
+        self::$groupPrefix .= isset($options['prefix']) ? trim($options['prefix'], '/') . '/' : '';
+        self::$groupMiddleware = $options['middleware'] ?? self::$groupMiddleware;
+
+        $callback();
+
+        self::$groupPrefix = $previousPrefix;
+        self::$groupMiddleware = $previousMiddleware;
+    }
+
     private static function addRoute(string $method, string $path, $handler, $middleware = null)
     {
+        $normalizedPath = trim(self::$groupPrefix . trim($path, '/'), '/') ?: '/';
+        $middlewareToUse = $middleware ?? self::$groupMiddleware;
+
         self::$routes[] = [
-            'method' => $method,
-            'path' => trim($path, '/'),
+            'method' => strtoupper($method),
+            'path' => $normalizedPath,
             'handler' => $handler,
-            'middleware' => $middleware  // Menyimpan middleware untuk rute ini
+            'middleware' => $middlewareToUse
         ];
     }
+
 
     public static function dispatch()
     {
         $request = new Request();
         $requestMethod = $request->method();
-        $requestUri = trim($request->getUri(), '/');
+        $requestUri = str_replace(ltrim(BASE_ENDPOINT, '/'), '', trim($request->getUri(), '/')) ?: '/';
 
         foreach (self::$routes as $route) {
-            // Membuat pola untuk rute dinamis
-            $pattern = '#^' . preg_replace('/\{(\w+)\}/', '(?<$1>[^/]+)', $route['path']) . '$#';
+            $pattern = '#^/?' . preg_replace('/\{(\w+)\}/', '(?<$1>[^/]+)', $route['path']) . '$#';
 
             if ($route['method'] === $requestMethod && preg_match($pattern, $requestUri, $matches)) {
-                // Eksekusi middleware jika ada
+
+                // Handle middleware
                 if ($route['middleware']) {
-                    $middleware = new $route['middleware'];
-                    if (!$middleware->handle()) {
-                        return;  // Jika middleware tidak lolos, berhenti
+                    $middlewares = is_array($route['middleware']) ? $route['middleware'] : [$route['middleware']];
+
+                    foreach ($middlewares as $middlewareDef) {
+                        if (is_array($middlewareDef)) {
+                            [$middlewareClass, $params] = $middlewareDef;
+                            $middleware = new $middlewareClass(...(array) $params);
+                        } else {
+                            $middlewareClass = $middlewareDef;
+                            $middleware = new $middlewareClass();
+                        }
+
+                        if (!method_exists($middleware, 'handle')) {
+                            Response::json(['error' => "Method handle not found in middleware: $middlewareClass"], 500);
+                            return;
+                        }
+
+                        if (!$middleware->handle($request)) {
+                            return; // Stop jika middleware gagal
+                        }
                     }
                 }
 
-                // Menyaring parameter dinamis dari rute
+
+                // Ambil parameter dinamis
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
-                // Menjalankan handler
+                // Jalankan handler
                 if (is_callable($route['handler'])) {
                     $response = call_user_func_array($route['handler'], [$request, ...array_values($params)]);
                 } elseif (is_array($route['handler'])) {
                     [$controller, $method] = $route['handler'];
-
-                    if (class_exists($controller) && method_exists($controller, $method)) {
-                        $controllerInstance = new $controller();
-                        $response = call_user_func_array([$controllerInstance, $method], [$request, ...array_values($params)]);
-                    } else {
+                    if (!class_exists($controller) || !method_exists($controller, $method)) {
                         Response::json(['error' => "Controller or method not found: $controller@$method"], 500);
                         return;
                     }
+
+                    $controllerInstance = new $controller($request);
+                    $response = call_user_func_array([$controllerInstance, $method], [$request, ...array_values($params)]);
                 } else {
                     Response::json(['error' => 'Invalid route handler'], 500);
                     return;
                 }
 
-                // Jika response adalah array → kirim JSON
+                // Tangani response
                 if (is_array($response)) {
                     Response::json($response);
+                } elseif (is_string($response)) {
+                    echo $response;
                 }
 
                 return;
             }
         }
 
-        // Jika tidak ada rute yang cocok, tampilkan halaman 404
+        // Jika tidak ada yang cocok
         Response::handleNotFound();
     }
 }

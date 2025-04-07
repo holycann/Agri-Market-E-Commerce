@@ -1,12 +1,16 @@
 <?php
 
-require_once __DIR__ . '/../core/BaseController.php';
+
+require_once __DIR__ . '/../../core/BaseController.php';
+require_once __DIR__ . '/../services/UserService.php';
 
 class UserController extends BaseController
 {
+    private $userService;
     public function __construct(Request $request)
     {
         parent::__construct($request);
+        $this->userService = new UserService();
     }
 
     public function index()
@@ -23,11 +27,20 @@ class UserController extends BaseController
     {
         if ($this->request->isPost()) {
             $data = $this->request->getBody();
-            // TODO: Simpan data ke database
-            $this->json(['message' => 'Data berhasil disimpan', 'data' => $data]);
-        }
 
-        $this->json(['error' => 'Invalid request'], 400);
+            $user = $this->userService->createNewData($data);
+            if (isset($user['error'])) {
+                // If there's an error, return it
+                $this->json($user, 400);
+            } else {
+                // If successful, return the user data
+                // $this->json(['message' => 'Data successfully saved', 'data' => $user]);
+                $this->json(['message' => 'Data successfully saved', 'redirect' => BASE_URL . '/login']);
+            }
+        } else {
+            // Handle the case where the request method is not POST
+            $this->json(['error' => 'Invalid request'], 400);
+        }
     }
 
     public function update(int $id)

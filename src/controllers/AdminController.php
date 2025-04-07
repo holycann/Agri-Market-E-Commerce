@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../core/BaseController.php';
 
-class VendorController extends BaseController
+class AdminController extends BaseController
 {
     public function __construct(Request $request)
     {
@@ -12,7 +12,7 @@ class VendorController extends BaseController
     public function index()
     {
         // Menampilkan halaman utama dengan daftar data
-        $this->json(['message' => 'Welcome to VendorController!']);
+        $this->json(['message' => 'Welcome to AdminController!']);
     }
 
     public function show(int $id)

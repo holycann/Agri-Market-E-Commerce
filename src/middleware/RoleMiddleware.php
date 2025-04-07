@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../core/BaseMiddleware.php';
+
 class RoleMiddleware extends BaseMiddleware
 {
     private array $allowedRoles;
@@ -11,12 +13,7 @@ class RoleMiddleware extends BaseMiddleware
 
     public function handle()
     {
-        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['role'])) {
-            Response::redirect('/login');
-            return false;
-        }
-
-        if (!in_array($_SESSION['user']['role'], $this->allowedRoles)) {
+        if (!in_array($_SESSION['role'], $this->allowedRoles)) {
             Response::redirect('/');
             return false;
         }
