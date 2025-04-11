@@ -14,7 +14,9 @@ class RoleMiddleware extends BaseMiddleware
     public function handle()
     {
         if (!in_array($_SESSION['role'], $this->allowedRoles)) {
-            Response::redirect('/');
+            // Show Output First And Redirect
+            Response::json(['error' => 'You do not have permission to access this page', 'redirect' => '/'], 403);
+
             return false;
         }
 

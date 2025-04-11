@@ -13,7 +13,7 @@ class AuthMiddleware extends BaseMiddleware
             (isset($_SESSION['email']) || isset($_COOKIE['remember_me']))
         ) {
             if ($isLoginOrRegister) {
-                Response::redirect(BASE_URL . '/');
+                Response::redirect(BASE_URL . '/', 'You are already logged in', 302, 3);
             }
             return false;
         }
@@ -23,7 +23,7 @@ class AuthMiddleware extends BaseMiddleware
             (!isset($_SESSION['email']) || !isset($_COOKIE['remember_me']))
         ) {
             if (!$isLoginOrRegister) {
-                Response::redirect(BASE_URL . '/login');
+                Response::redirect(BASE_URL . '/', 'You are not logged in', 302, 3);
             }
             return false;
         }

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../core/BaseController.php';
+require_once __DIR__ . '/../../core/BaseController.php';
 
 class ProductController extends BaseController
 {
@@ -55,5 +55,17 @@ class ProductController extends BaseController
         }
 
         $this->json(['message' => 'Data tidak ditemukan', 'id' => $id]);
+    }
+
+    //Pages
+    public function IndexPage()
+    {
+        // Menampilkan halaman Product
+        $this->render('product/ProductPage');
+    }
+    public function DetailPage()
+    {
+        // Menampilkan halaman Product
+        $this->render('product/DetailProductPage');
     }
 }

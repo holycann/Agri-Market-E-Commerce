@@ -63,4 +63,21 @@ class UserController extends BaseController
 
         $this->json(['error' => 'Invalid request'], 400);
     }
+
+    // Pages
+    public function ProfilePage()
+    {
+        // Menampilkan halaman Account and System Settings
+        $this->render('AccountAndSystemSettings/ProfilePage');
+    }
+    public function UpdateProfilePage()
+    {
+        // Menampilkan halaman Account and System Settings
+        $this->render('AccountAndSystemSettings/UpdateProfilePage');
+    }
+    public function UpdatePasswordPage()
+    {
+        // Menampilkan halaman Account and System Settings
+        $this->render('AccountAndSystemSettings/UpdatePasswordPage');
+    }
 }

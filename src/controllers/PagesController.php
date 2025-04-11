@@ -12,7 +12,7 @@ class PagesController extends BaseController
     public function IndexPage()
     {
         // Menampilkan halaman utama
-        $this->render('customer/Homepage');
+        $this->render('Homepage');
     }
 
     public function LoginPage()
@@ -20,7 +20,6 @@ class PagesController extends BaseController
 
         // Menampilkan halaman login
         $this->render('auth/Login');
-
     }
 
     public function RegisterPage()
@@ -34,5 +33,4 @@ class PagesController extends BaseController
         // Menampilkan halaman 404
         $this->render('error/404');
     }
-
 }

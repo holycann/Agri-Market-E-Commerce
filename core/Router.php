@@ -88,7 +88,7 @@ class Router
                         }
 
                         if (!$middleware->handle($request)) {
-                            return; // Stop jika middleware gagal
+                            return;
                         }
                     }
                 }

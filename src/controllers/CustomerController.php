@@ -27,7 +27,7 @@ class CustomerController extends BaseController
         if ($this->request->isPost()) {
             $data = $this->request->getBody();
             // TODO: Simpan data ke database atau lakukan proses lainnya
-            
+
             $this->json(['message' => 'Data berhasil disimpan', 'data' => $data]);
         }
 
@@ -39,7 +39,7 @@ class CustomerController extends BaseController
         if ($this->request->isPost()) {
             $data = $this->request->getBody();
             // TODO: Update data berdasarkan ID
-            
+
             $this->json(['message' => 'Data berhasil diperbarui', 'id' => $id, 'data' => $data]);
         }
 
@@ -50,7 +50,7 @@ class CustomerController extends BaseController
     {
         if ($this->request->isPost()) {
             // TODO: Hapus data berdasarkan ID
-            
+
             $this->json(['message' => 'Data berhasil dihapus', 'id' => $id]);
         }
 
