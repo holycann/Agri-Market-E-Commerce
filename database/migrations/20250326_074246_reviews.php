@@ -6,13 +6,14 @@ function migrate_reviews_up(Migration $migration)
     $sql = <<<SQL
     CREATE TABLE IF NOT EXISTS reviews (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        customer_id INT,
-        product_id INT,
-        rating INT CHECK (rating BETWEEN 1 AND 5),
+        user_id INT,
+        product_id INT NOT NULL,
+        rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
         review_text TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL,
-        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE=INNODB;
     SQL;
 

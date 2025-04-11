@@ -67,17 +67,38 @@ class UserController extends BaseController
     // Pages
     public function ProfilePage()
     {
-        // Menampilkan halaman Account and System Settings
-        $this->render('AccountAndSystemSettings/ProfilePage');
+        $user = $this->userService->getUserByEmail($_SESSION['email']);
+
+        if (!$user) {
+            $this->json(['error' => 'User not found'], 404);
+            return;
+        } else {
+            $this->render('AccountAndSystemSettings/ProfilePage', $user);
+            return;
+        }
     }
     public function UpdateProfilePage()
     {
-        // Menampilkan halaman Account and System Settings
-        $this->render('AccountAndSystemSettings/UpdateProfilePage');
+        $user = $this->userService->getUserByEmail($_SESSION['email']);
+
+        if (!$user) {
+            $this->json(['error' => 'User not found'], 404);
+            return;
+        } else {
+            $this->render('AccountAndSystemSettings/UpdateProfilePage', $user);
+            return;
+        }
     }
     public function UpdatePasswordPage()
     {
-        // Menampilkan halaman Account and System Settings
-        $this->render('AccountAndSystemSettings/UpdatePasswordPage');
+        $user = $this->userService->getUserByEmail($_SESSION['email']);
+
+        if (!$user) {
+            $this->json(['error' => 'User not found'], 404);
+            return;
+        } else {
+            $this->render('AccountAndSystemSettings/UpdatePasswordPage', $user);
+            return;
+        }
     }
 }

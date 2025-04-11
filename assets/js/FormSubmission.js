@@ -2,7 +2,7 @@
 function formSubmission(formId) {
     $(document).ready(function () {
         // Define custom 'strongPassword' validation rule
-        $.validator.addMethod("strongPassword", function(value, element) {
+        $.validator.addMethod("strongPassword", function (value, element) {
             // Password must have at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character
             return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
         }, "Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, numbers, and special characters.");
@@ -75,6 +75,21 @@ function getValidationRules(formId) {
                 },
                 password: {
                     required: true
+                }
+            };
+        case "update-password-form":
+            return {
+                'old-password': {
+                    required: true,
+                },
+                'new-password': {
+                    required: true,
+                    minlength: 8,
+                    strongPassword: true
+                },
+                'confirm-password': {
+                    required: true,
+                    equalTo: "#new-password"
                 }
             };
         default:

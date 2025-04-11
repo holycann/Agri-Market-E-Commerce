@@ -27,6 +27,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= BASE_ENDPOINT ?>/assets/css/style.css">
 
+    <!-- Custom JS -->
+    <script src="<?= BASE_ENDPOINT ?>/assets/js/FormSubmission.js"></script>
 </head>
 
 <body class="bg-gray-50">

@@ -11,6 +11,7 @@ function migrate_notifications_up(Migration $migration)
         type ENUM('order_update', 'promotion', 'system_alert') NOT NULL,
         is_read BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=INNODB;
     SQL;

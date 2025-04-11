@@ -5,8 +5,13 @@ require_once __DIR__ . '/../../core/BaseModel.php';
 class UserModel extends BaseModel
 {
     public int $id;
-    public string $name;
+    public string $username;
+    public string $firstname;
+    public string $lastname;
     public string $email;
+
+    public int $phone_number;
+    public string $address;
     public string $password;
     public string $role;
     public string $created_at;

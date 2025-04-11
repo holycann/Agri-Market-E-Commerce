@@ -24,29 +24,29 @@
                     <div>
                         <label class="text-gray-600">First Name</label>
                         <input class="w-full p-2 border border-gray-300 rounded" name="first_name"
-                            placeholder="Please Input Your First Name" type="text" value="Rafiqul" />
+                            placeholder="Please Input Your First Name" type="text" value="<?= $data['first_name'] ?? '' ?>" />
                     </div>
                     <div>
                         <label class="text-gray-600">Last Name</label>
                         <input class="w-full p-2 border border-gray-300 rounded" name="last_name"
-                            placeholder="Please Input Your Last Name" type="text" value="Rahman" />
+                            placeholder="Please Input Your Last Name" type="text" value="<?= $data['last_name'] ?? '' ?>" />
                     </div>
                     <div>
                         <label class="text-gray-600">Email address</label>
                         <input class="w-full p-2 border border-gray-300 rounded" placeholder="Please Input Your Email"
-                            name="email" type="email" value="rafiqulrahman51@gmail.com" />
+                            name="email" type="email" value="<?= $data['email'] ?? '' ?>" />
                     </div>
                     <div>
 
                         <label class="text-gray-600">Phone Number</label>
                         <input class="w-full p-2 border border-gray-300 rounded" name="phone"
-                            placeholder="Please Input Your Phone Number" type="text" value="+62 345 346 46" />
+                            placeholder="Please Input Your Phone Number" type="text" value="<?= $data['phone'] ?? '' ?>" />
                     </div>
                 </div>
                 <div>
                     <label class="text-gray-600">Address</label>
                     <textarea class="w-full p-2 border border-gray-300 rounded" placeholder="Please Input Your Address"
-                        name="address" rows="4">Jauh Pake Helm</textarea>
+                        name="address" rows="4"><?= $data['address'] ?? '' ?></textarea>
                 </div>
                 <button class="bg-blue-500 text-white px-4 py-2 rounded w-full mt-4">Save Changes</button>
             </div>

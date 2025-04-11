@@ -76,20 +76,6 @@
     </div>
 </footer>
 
-<!-- Dropdown user menu toggle -->
-<script>
-    $(document).ready(function () {
-        const profilePic = $('#profile-pic');
-        const dropdownMenu = $('#dropdown-menu');
-        console.log("test")
-
-        profilePic.on('click', function () {
-            console.log("test")
-            dropdownMenu.toggleClass('hidden');
-        });
-    });
-</script>
-
 <!-- Mobile Menu Toggle Script -->
 <script>
     $(document).ready(function () {

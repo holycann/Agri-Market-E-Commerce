@@ -10,6 +10,26 @@ class UserService extends BaseService
         parent::__construct(new UserRepository());
     }
 
+    public function getUserByEmail(string $email): UserModel | array | null
+    {
+        // Validate email format
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return null;
+        }
+
+        // Fetch user by email
+        $user = $this->repository->findByEmail($email);
+        
+
+        return $user ? $user->toArray() : null;
+    }
+
+    /**
+     * Create a new user in the database.
+     *
+     * @param array $data User data to be inserted.
+     * @return UserModel|array The created UserModel or an error message.
+     */
 
     public function createNewData(array $data): UserModel|array
     {

@@ -8,12 +8,14 @@ function migrate_products_up(Migration $migration)
         id INT AUTO_INCREMENT PRIMARY KEY,
         vendor_id INT,
         name VARCHAR(100) NOT NULL,
-        description TEXT,
-        category VARCHAR(50),
+        description TEXT NOT NULL,
+        category ENUM('livestock', 'crops', 'forestry', 'dairy', 'fish', 'miscellaneous') NOT NULL,
         price DECIMAL(10,2) NOT NULL,
-        stock INT DEFAULT 0,
+        stock_quantity INT NOT NULL,
+        unit VARCHAR(20) NOT NULL,
+        status ENUM('active', 'inactive') DEFAULT 'active',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP NULL,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (vendor_id) REFERENCES vendors(id) ON DELETE CASCADE
     ) ENGINE=INNODB;
     SQL;

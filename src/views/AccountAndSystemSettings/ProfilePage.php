@@ -14,7 +14,7 @@
                         src="https://storage.googleapis.com/a1aa/image/fhdaknZibCEeet32zZgI5hU7cE99B0p_3ZtOEKNcwEc.jpg"
                         width="100" />
                     <div>
-                        <h3 class="text-xl font-semibold">Rafiqul Rahman</h3>
+                        <h3 class="text-xl font-semibold"><?= $data['name'] ?></h3>
                     </div>
                 </div>
             </div>
@@ -24,23 +24,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <p class="text-gray-600">First Name</p>
-                    <p class="font-semibold">Rafiqul</p>
+                    <p class="font-semibold"><?= $data['first_name'] ?? '' ?></p>
                 </div>
                 <div>
                     <p class="text-gray-600">Last Name</p>
-                    <p class="font-semibold">Rahman</p>
+                    <p class="font-semibold"><?= $data['last_name'] ?? '' ?></p>
                 </div>
                 <div>
                     <p class="text-gray-600">Email address</p>
-                    <p class="font-semibold">rafiqulrahman51@gmail.com</p>
+                    <p class="font-semibold"><?= $data['email'] ?? '' ?></p>
                 </div>
                 <div>
                     <p class="text-gray-600">Phone</p>
-                    <p class="font-semibold">+09 345 346 46</p>
+                    <p class="font-semibold"><?= $data['phone'] ?? '' ?></p>
                 </div>
                 <div>
-                    <p class="text-gray-600">Bio</p>
-                    <p class="font-semibold">Team Manager</p>
+                    <p class="text-gray-600">Address</p>
+                    <p class="font-semibold"><?= $data['address'] ?? '' ?></p>
                 </div>
             </div>
         </div>

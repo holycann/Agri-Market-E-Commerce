@@ -36,6 +36,7 @@ class AuthService extends BaseService
             setcookie("remember_me", $token, time() + (86400 * 30), "/", "", false, true);
         }
 
+        $_SESSION['user_id'] = $existingUser['user_id'];
         $_SESSION['email'] = $existingUser['email'];
         $_SESSION['name'] = $existingUser['name'];
         $_SESSION['role'] = $existingUser['role'];
